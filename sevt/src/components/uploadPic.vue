@@ -17,6 +17,8 @@
 <script>
 import '../../node_modules/cropperjs/dist/cropper.min.css'
 import Cropper from 'cropperjs'  
+import eventbus from '../js/eventbus.js';
+
 export default {
   data () {
     return {
@@ -57,9 +59,10 @@ export default {
         return;
       }
       croppedCanvas = this.cropper.getCroppedCanvas();
-      var c=document.getElementById("Dcanvas");
+      /*var c=document.getElementById("Dcanvas");
       var ctx=c.getContext("2d");
-      ctx.drawImage(croppedCanvas, 0, 0, 620, 900);
+      ctx.drawImage(croppedCanvas, 0, 0, 620, 900);*/
+      eventbus.$emit('printBackground', croppedCanvas);
     },
   }
 }  

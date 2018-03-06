@@ -2,6 +2,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import '../node_modules/cropperjs/dist/cropper.min.css'
+import './css/bootstrapSlateTheme.min.css'
+import './css/index.css'
 
 Vue.config.productionTip = false
 
