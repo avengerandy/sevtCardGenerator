@@ -75,6 +75,12 @@ export default {
     title: function (title) {
       eventbus.$emit('printTitle', title);
     },
+    act: function (act) {
+      eventbus.$emit('printAct', act);
+    },
+    def: function (def) {
+      eventbus.$emit('printDef', def);
+    },
     leftTopIcon: function (leftTopIcon) {
       eventbus.$emit('printLeftTopIcon', leftTopIcon);
     }
