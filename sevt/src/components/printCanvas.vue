@@ -13,13 +13,12 @@ export default {
     return {
       canvas: '',
       canvasContext: '',
-      imageData: imageData,
       cardData: {
         croppedCanvas: null,
         title: '',
         act: 0,
         def: 0,
-        leftTopIcon: 'magicBook'
+        leftTopIcon: '1'
       }
     }
   },
@@ -56,6 +55,7 @@ export default {
       this.canvas.attr('width', this.canvas.width() * Ratio)
     },
     print: function() {
+      this.canvasContext.clearRect(0, 0, this.canvas.attr('width'), this.canvas.attr('height'));
       this.canvasContext.drawImage(
         this.cardData.croppedCanvas, 
         0, 
@@ -64,14 +64,32 @@ export default {
         this.canvas.attr('height')
       );
       this.canvasContext.drawImage(
-        this.imageData.monster, 
+        imageData.monster, 
         0, 
         0, 
         this.canvas.attr('width'), 
         this.canvas.attr('height')
       );
+      let leftTopIconImage
+      switch (this.cardData.leftTopIcon) {
+        case '1':
+          leftTopIconImage = imageData.leftTopIconMagicBook;
+          break;
+        case '2':
+          leftTopIconImage = imageData.leftTopIconMap;
+          break;
+        case '3':
+          leftTopIconImage = imageData.leftTopIconSword;
+          break;
+        case '4':
+          leftTopIconImage = imageData.leftTopIconHammer;
+          break;
+        case '5':
+          leftTopIconImage = imageData.leftTopIconInsignia;
+          break;
+      }
       this.canvasContext.drawImage(
-        this.imageData.leftTopIcon, 
+        leftTopIconImage, 
         0, 
         0, 
         this.canvas.attr('width'), 
@@ -81,11 +99,11 @@ export default {
       let fontPx = config.cardWidthPx * 0.05;
       this.canvasContext.font = fontPx + "px Arial, cwTeXFangSong";
       this.canvasContext.fillText(this.cardData.title, config.cardWidthPx * 0.6, config.cardWidthPx * 0.172);
-      fontPx = config.cardWidthPx * 0.03;
+      fontPx = config.cardWidthPx * 0.025;
       this.canvasContext.fillStyle = "rgba(255, 255, 255, 1)";
-      this.canvasContext.font = fontPx + "px Arial, cwTeXFangSong";
-      this.canvasContext.fillText(this.cardData.act, config.cardWidthPx * 0.2, config.cardWidthPx * 1.202);
-      this.canvasContext.fillText(this.cardData.def, config.cardWidthPx * 0.71, config.cardWidthPx * 1.26);
+      this.canvasContext.font = "italic " + fontPx + "px Arial, cwTeXFangSong";
+      this.canvasContext.fillText(this.cardData.act, config.cardWidthPx * 0.18, config.cardWidthPx * 1.202);
+      this.canvasContext.fillText(this.cardData.def, config.cardWidthPx * 0.75, config.cardWidthPx * 1.265);
     },
     printBackground: function(croppedCanvas) {
       this.cardData.croppedCanvas = croppedCanvas;
