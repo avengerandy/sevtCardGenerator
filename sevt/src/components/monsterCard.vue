@@ -81,8 +81,8 @@ export default {
       act: 0,
       def: 0,
       leftTopIcon: '1',
-      attribute: 'wind',
-      romanNumeral: '2',
+      attribute: 'mine',
+      romanNumeral: '1',
       cardType: '1'
     }
   },
@@ -98,6 +98,12 @@ export default {
     },
     leftTopIcon: function (leftTopIcon) {
       eventbus.$emit('printLeftTopIcon', leftTopIcon);
+    },
+    romanNumeral: function (romanNumeral) {
+      eventbus.$emit('printNum', romanNumeral);
+    },
+    attribute: function (attribute) {
+      eventbus.$emit('printAttribute', attribute);
     }
   },
   mounted () {

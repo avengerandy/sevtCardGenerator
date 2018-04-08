@@ -18,7 +18,9 @@ export default {
         title: '',
         act: 0,
         def: 0,
-        leftTopIcon: '1'
+        leftTopIcon: '1',
+        num: '1',
+        attribute: 'mine'
       }
     }
   },
@@ -36,6 +38,8 @@ export default {
     eventbus.$on('printAct', this.printAct);
     eventbus.$on('printDef', this.printDef);
     eventbus.$on('printLeftTopIcon', this.printLeftTopIcon);
+    eventbus.$on('printNum', this.printNum);
+    eventbus.$on('printAttribute', this.printAttribute);
   },
   watch: {
     cardData: {
@@ -95,6 +99,59 @@ export default {
         this.canvas.attr('width'), 
         this.canvas.attr('height')
       );
+      let attributeImage
+      switch (this.cardData.attribute) {
+        case 'fire':
+          attributeImage = imageData.attribute_fire;
+          break;
+        case 'grass':
+          attributeImage = imageData.attribute_grass;
+          break;
+        case 'mine':
+          attributeImage = imageData.attribute_mine;
+          break;
+        case 'water':
+          attributeImage = imageData.attribute_water;
+          break;
+        case 'wind':
+          attributeImage = imageData.attribute_wind;
+          break;
+      }
+      this.canvasContext.drawImage(
+        attributeImage, 
+        0, 
+        0, 
+        this.canvas.attr('width'), 
+        this.canvas.attr('height')
+      );
+            let numImage
+      switch (this.cardData.num) {
+        case '1':
+          numImage = imageData.num_one;
+          break;
+        case '2':
+          numImage = imageData.num_two;
+          break;
+        case '3':
+          numImage = imageData.num_three;
+          break;
+        case '4':
+          numImage = imageData.num_four;
+          break;
+        case '5':
+          numImage = imageData.num_five;
+          break;
+        case '6':
+          numImage = imageData.num_six;
+          break;
+      }
+      this.canvasContext.drawImage(
+        numImage, 
+        0, 
+        0, 
+        this.canvas.attr('width'), 
+        this.canvas.attr('height')
+      );
       this.canvasContext.fillStyle = "rgba(229, 205, 197, 1)";
       let fontPx = config.cardWidthPx * 0.05;
       this.canvasContext.font = fontPx + "px Arial, cwTeXFangSong";
@@ -102,8 +159,16 @@ export default {
       fontPx = config.cardWidthPx * 0.025;
       this.canvasContext.fillStyle = "rgba(255, 255, 255, 1)";
       this.canvasContext.font = "italic " + fontPx + "px Arial, cwTeXFangSong";
-      this.canvasContext.fillText(this.cardData.act, config.cardWidthPx * 0.18, config.cardWidthPx * 1.202);
-      this.canvasContext.fillText(this.cardData.def, config.cardWidthPx * 0.75, config.cardWidthPx * 1.265);
+      this.canvasContext.fillText(
+        this.cardData.act, 
+        config.cardWidthPx * (0.2 - this.cardData.act.toString().length * 0.005), 
+        config.cardWidthPx * 1.202
+      );
+      this.canvasContext.fillText(
+        this.cardData.def, 
+        config.cardWidthPx * (0.77 - this.cardData.def.toString().length * 0.005), 
+        config.cardWidthPx * 1.265
+      );
     },
     printBackground: function(croppedCanvas) {
       this.cardData.croppedCanvas = croppedCanvas;
@@ -119,6 +184,12 @@ export default {
     },
     printDef: function(def) {
       this.cardData.def = def;
+    },
+    printNum: function(num) {
+      this.cardData.num = num;
+    },
+    printAttribute: function(attribute) {
+      this.cardData.attribute = attribute;
     }
   }
 }
