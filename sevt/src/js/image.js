@@ -1,6 +1,9 @@
 let monster = new Image();
 monster.src = './static/monster.png';
 
+let back = new Image();
+back.src = './static/back.png';
+
 let leftTopIconMagicBook = new Image();
 leftTopIconMagicBook.src = './static/magicBook.png';
 let leftTopIconMap = new Image();
@@ -38,6 +41,7 @@ num_six.src = './static/numsix.png';
 
 export default {
     monster: monster,
+    back: back,
     leftTopIconMagicBook: leftTopIconMagicBook,
     leftTopIconMap: leftTopIconMap,
     leftTopIconSword: leftTopIconSword,

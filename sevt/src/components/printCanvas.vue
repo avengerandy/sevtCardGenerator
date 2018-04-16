@@ -59,18 +59,16 @@ export default {
       this.canvas.attr('width', this.canvas.width() * Ratio)
     },
     print: function() {
-      this.canvasContext.clearRect(0, 0, this.canvas.attr('width'), this.canvas.attr('height'));
+      this.canvasContext.drawImage(imageData.back, 0, 0, this.canvas.attr('width'), this.canvas.attr('height'));
       this.canvasContext.drawImage(
         this.cardData.croppedCanvas, 
-        0, 
-        0, 
+        0, 0, 
         this.canvas.attr('width'), 
         this.canvas.attr('height')
       );
       this.canvasContext.drawImage(
         imageData.monster, 
-        0, 
-        0, 
+        0, 0, 
         this.canvas.attr('width'), 
         this.canvas.attr('height')
       );
@@ -94,8 +92,7 @@ export default {
       }
       this.canvasContext.drawImage(
         leftTopIconImage, 
-        0, 
-        0, 
+        0, 0, 
         this.canvas.attr('width'), 
         this.canvas.attr('height')
       );
@@ -119,8 +116,7 @@ export default {
       }
       this.canvasContext.drawImage(
         attributeImage, 
-        0, 
-        0, 
+        0, 0, 
         this.canvas.attr('width'), 
         this.canvas.attr('height')
       );
@@ -147,8 +143,7 @@ export default {
       }
       this.canvasContext.drawImage(
         numImage, 
-        0, 
-        0, 
+        0, 0, 
         this.canvas.attr('width'), 
         this.canvas.attr('height')
       );
