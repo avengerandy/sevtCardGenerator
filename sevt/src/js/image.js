@@ -39,6 +39,15 @@ num_five.src = './static/numfive.png';
 let num_six = new Image();
 num_six.src = './static/numsix.png';
 
+let religion = new Image();
+religion.src = './static/religion.png';
+let equip = new Image();
+equip.src = './static/equip.png';
+let strategy = new Image();
+strategy.src = './static/strategy.png';
+let environment = new Image();
+environment.src = './static/environment.png';
+
 export default {
     monster: monster,
     back: back,
@@ -58,4 +67,8 @@ export default {
     num_four: num_four,
     num_five: num_five,
     num_six: num_six,
+    religion: religion,
+    equip: equip,
+    strategy: strategy,
+    environment: environment
 };

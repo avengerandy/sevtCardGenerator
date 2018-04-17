@@ -7,64 +7,101 @@
         <input type="text" class="form-control" id="title" v-model="title" placeholder="名稱">
       </div>
     </div>
-    <!--
     <div class="form-group row">
-      <label for="cardType" class="col-sm-2 col-form-label">左上物件</label>
+      <label for="cardType" class="col-sm-2 col-form-label">類型</label>
       <div class="col-sm-10">
-        <select class="form-control" v-model="cardType" id="cardType" >
-          <option value="magicBook">法書</option>
-          <option value="map">地圖</option>
-          <option value="sword">劍</option>
-          <option value="hammer">鐵鎚</option>
-          <option value="insignia">徽章</option>
-        </select>
-      </div>
-    </div>-->
-    <div class="form-group row">
-      <label for="leftTopIcon" class="col-sm-2 col-form-label">左上物件</label>
-      <div class="col-sm-10">
-        <select class="form-control" v-model="leftTopIcon" id="leftTopIcon" >
-          <option value="1">法書</option>
-          <option value="2">地圖</option>
-          <option value="3">劍</option>
-          <option value="4">鐵鎚</option>
-          <option value="5">徽章</option>
-        </select>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="typeRadios" value="1" v-model="cardType">
+            英靈卡
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="typeRadios" value="2" v-model="cardType">
+            其他卡
+          </label>
+        </div>
       </div>
     </div>
-    <div class="form-group row">
-      <label for="attribute" class="col-sm-2 col-form-label">屬性珠</label>
-      <div class="col-sm-10">
-        <select class="form-control" v-model="attribute" id="attribute">
-          <option value="mine">雷</option>
-          <option value="wind">風</option>
-          <option value="grass">草</option>
-          <option value="water">水</option>
-          <option value="fire">火</option>
-        </select>
+    <div v-show="isMonster">
+      <div class="form-group row">
+        <label for="leftTopIcon" class="col-sm-2 col-form-label">左上物件</label>
+        <div class="col-sm-10">
+          <select class="form-control" v-model="leftTopIcon" id="leftTopIcon" >
+            <option value="1">法書</option>
+            <option value="2">地圖</option>
+            <option value="3">劍</option>
+            <option value="4">鐵鎚</option>
+            <option value="5">徽章</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="attribute" class="col-sm-2 col-form-label">屬性珠</label>
+        <div class="col-sm-10">
+          <select class="form-control" v-model="attribute" id="attribute">
+            <option value="mine">雷</option>
+            <option value="wind">風</option>
+            <option value="grass">草</option>
+            <option value="water">水</option>
+            <option value="fire">火</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="romanNumeral" class="col-sm-2 col-form-label">羅馬數</label>
+        <div class="col-sm-10">
+          <select class="form-control" v-model="romanNumeral" id="romanNumeral">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="act" class="col-sm-2 col-form-label">攻擊</label>
+        <div class="col-sm-4">
+          <input type="number" class="form-control" v-model="act" id="act">
+        </div>
+        <label for="def" class="col-sm-2 col-form-label">防守</label>
+        <div class="col-sm-4">
+          <input type="number" class="form-control" v-model="def" id="def">
+        </div>
       </div>
     </div>
-    <div class="form-group row">
-      <label for="romanNumeral" class="col-sm-2 col-form-label">羅馬數</label>
-      <div class="col-sm-10">
-        <select class="form-control" v-model="romanNumeral" id="romanNumeral">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-        </select>
+    <div v-show="!isMonster">
+      <div class="form-group row">
+        <label for="otherLeftTopIcon" class="col-sm-2 col-form-label">卡類</label>
+        <div class="col-sm-10">
+          <select class="form-control" id="otherLeftTopIcon" v-model="otherLeftTopIcon">
+            <option value="religion">信仰</option>
+            <option value="equip">裝備</option>
+            <option value="strategy">謀略</option>
+            <option value="environment">環境</option>
+          </select>
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label for="act" class="col-sm-2 col-form-label">攻擊</label>
-      <div class="col-sm-4">
-        <input type="number" class="form-control" v-model="act" id="act">
+      <div class="form-group row">
+        <label for="contentFirstFontSize" class="col-sm-2 col-form-label">標題字體</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" id="contentFirstFontSize" v-model="contentFirstFontSize">
+        </div>
       </div>
-      <label for="def" class="col-sm-2 col-form-label">防守</label>
-      <div class="col-sm-4">
-        <input type="number" class="form-control" v-model="def" id="def">
+      <div class="form-group row">
+        <label for="fontSize" class="col-sm-2 col-form-label">字體</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" id="fontSize" v-model="contentFontSize">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="contentTextarea" class="col-sm-12">內容</label>
+        <div class="col-sm-12">
+          <textarea class="form-control" id="contentTextarea" rows="5" v-model="content"></textarea>
+        </div>
       </div>
     </div>
   </form>
@@ -83,7 +120,11 @@ export default {
       leftTopIcon: '1',
       attribute: 'mine',
       romanNumeral: '1',
-      cardType: '1'
+      cardType: '1',
+      otherLeftTopIcon: 'religion',
+      content: '',
+      contentFontSize: 70,
+      contentFirstFontSize: 100
     }
   },
   watch: {
@@ -104,11 +145,28 @@ export default {
     },
     attribute: function (attribute) {
       eventbus.$emit('printAttribute', attribute);
+    },
+    cardType: function (cardType) {
+      eventbus.$emit('printCardType', cardType);
+    },
+    otherLeftTopIcon: function (otherLeftTopIcon) {
+      eventbus.$emit('printOtherLeftTopIcon', otherLeftTopIcon);
+    },
+    content: function (content) {
+      eventbus.$emit('printContent', content);
+    },
+    contentFontSize:function (contentFontSize) {
+      eventbus.$emit('printContentFontSize', contentFontSize);
+    },
+    contentFirstFontSize:function (contentFirstFontSize) {
+      eventbus.$emit('printContentFirstFontSize', contentFirstFontSize);
     }
   },
-  mounted () {
-  },
-  methods: {}
+  computed: {
+    isMonster: function () {
+      return this.cardType == '1'
+    }
+  }
 }
 </script>
 
