@@ -60,12 +60,15 @@ export default {
   },
   methods: {
     downloadCanvas() {
+      eventbus.$emit('output');
+      /*
       document.getElementById('printCanvas').toBlob(function(blobData){
         let downloadLink = document.createElement('a');
         downloadLink.href = window.URL.createObjectURL(blobData);
         downloadLink.download = 'card.png';
         downloadLink.click();
       });
+      */
     },
     changeComponent(componentName) {
       this.rightComponent = componentName

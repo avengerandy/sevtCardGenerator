@@ -16,6 +16,7 @@ export default {
       cardData: {
         croppedCanvas: null,
         title: '',
+        titleFontSize: 90,
         act: 0,
         def: 0,
         leftTopIcon: '1',
@@ -50,6 +51,16 @@ export default {
     eventbus.$on('printContent', this.printContent);
     eventbus.$on('printContentFontSize', this.printContentFontSize);
     eventbus.$on('printContentFirstFontSize', this.printContentFirstFontSize);
+    eventbus.$on('printTitleFontSize', this.printTitleFontSize);
+    eventbus.$on('output', () => {
+      document.getElementById('printCanvas').toBlob(function(blobData){
+        let downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(blobData);
+        let title = printCanvasVue.cardData.title ? printCanvasVue.cardData.title : 'card' ;
+        downloadLink.download = title + '.png';
+        downloadLink.click();
+      });
+    });
   },
   watch: {
     cardData: {
@@ -153,7 +164,7 @@ export default {
           this.canvas.attr('width'), 
           this.canvas.attr('height')
         );
-        fontPx = config.cardWidthPx * 0.025;
+        let fontPx = config.cardWidthPx * 0.025;
         this.canvasContext.fillStyle = "rgba(255, 255, 255, 1)";
         this.canvasContext.font = "italic " + fontPx + "px Arial, cwTeXFangSong";
         this.canvasContext.fillText(
@@ -213,9 +224,13 @@ export default {
         }
       }
       this.canvasContext.fillStyle = "rgba(229, 205, 197, 1)";
-      let fontPx = config.cardWidthPx * 0.05;
-      this.canvasContext.font = fontPx + "px Arial, cwTeXFangSong";
-      this.canvasContext.fillText(this.cardData.title, config.cardWidthPx * 0.6, config.cardWidthPx * 0.172);
+      //let fontPx = config.cardWidthPx * 0.05;
+      this.canvasContext.font = this.cardData.titleFontSize + "px Arial, cwTeXFangSong";
+      this.canvasContext.fillText(
+        this.cardData.title, 
+        config.cardWidthPx * 0.6, 
+        config.cardWidthPx * 0.172 - (90 - parseInt(this.cardData.titleFontSize))/2.5
+      );
     },
     printBackground: function(croppedCanvas) {
       this.cardData.croppedCanvas = croppedCanvas;
@@ -252,6 +267,9 @@ export default {
     },
     printContentFirstFontSize: function(contentFirstFontSize) {
       this.cardData.contentFirstFontSize = contentFirstFontSize;
+    },
+    printTitleFontSize: function(titleFontSize) {
+      this.cardData.titleFontSize = titleFontSize;
     }
   }
 }

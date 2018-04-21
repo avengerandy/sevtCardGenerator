@@ -33,6 +33,7 @@ export default {
       background:false,
       zoomable:false,
       responsive:false,
+      autoCropArea:1,
       ready: function () {
         uploadPicVue.croppable = true;
       },

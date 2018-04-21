@@ -2,6 +2,12 @@
 <div class="container">
   <form>
     <div class="form-group row">
+      <label for="titleFontSize" class="col-sm-2 col-form-label">名稱字體</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="titleFontSize" v-model="titleFontSize">
+      </div>
+    </div>
+    <div class="form-group row">
       <label for="title" class="col-sm-2 col-form-label">名稱</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="title" v-model="title" placeholder="名稱">
@@ -115,6 +121,7 @@ export default {
   data () {
     return {
       title: '',
+      titleFontSize: 90,
       act: 0,
       def: 0,
       leftTopIcon: '1',
@@ -160,6 +167,9 @@ export default {
     },
     contentFirstFontSize:function (contentFirstFontSize) {
       eventbus.$emit('printContentFirstFontSize', contentFirstFontSize);
+    },
+    titleFontSize:function (titleFontSize) {
+      eventbus.$emit('printTitleFontSize', titleFontSize);
     }
   },
   computed: {
