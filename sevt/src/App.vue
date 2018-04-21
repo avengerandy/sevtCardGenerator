@@ -15,6 +15,10 @@
           <li class="nav-item">
             <a class="nav-link">資訊</a>
           </li>
+          <li class="nav-item" @click="downloadCanvas">
+            <a class="nav-link">輸出</a>
+          </li>
+          <!--
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">輸出相關</a>
             <div class="dropdown-menu">
@@ -23,6 +27,7 @@
               <a class="dropdown-item" href="#">dpiConverter</a>
             </div>
           </li>
+          -->
         </ul>
         <keep-alive>
           <component :is="rightComponent"></component>

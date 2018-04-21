@@ -204,14 +204,20 @@ export default {
         let lines = contentList.length;
         this.canvasContext.fillStyle = "rgba(77, 57, 0, 1)";
         this.canvasContext.font = this.cardData.contentFirstFontSize + "px Arial, cwTeXFangSong";
+        if(this.cardData.otherLeftTopIcon != 'environment') {
+          contentList[0] = '【' + contentList[0] + '】';
+        }
         this.canvasContext.fillText(
-          '【' + contentList[0] + '】', 
+          contentList[0], 
           config.cardWidthPx * 0.07, 
           config.cardWidthPx * 1.05 + parseInt(this.cardData.contentFirstFontSize)
         );
         
         this.canvasContext.font = this.cardData.contentFontSize + "px Arial, cwTeXFangSong";
         let lineHigh = this.cardData.contentFontSize / 2;
+        if(this.cardData.otherLeftTopIcon == 'environment') {
+          lineHigh = 0;
+        }
         for (let index = 0; index < lines; index++) {
           if(index === 0){
             continue;
