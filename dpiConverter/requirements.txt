@@ -1,0 +1,13 @@
+altgraph==0.15
+dill==0.2.5
+future==0.16.0
+macholib==1.9
+pefile==2017.11.5
+Pillow==5.0.0
+PyFunctional==1.1.2
+PyInstaller==3.3.1
+pypiwin32==223
+pyreadline==2.1
+pywin32==223
+six==1.10.0
+tabulate==0.7.7

@@ -18,16 +18,6 @@
           <li class="nav-item" @click="downloadCanvas">
             <a class="nav-link">輸出</a>
           </li>
-          <!--
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">輸出相關</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#" @click="downloadCanvas" id="download">輸出</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">dpiConverter</a>
-            </div>
-          </li>
-          -->
         </ul>
         <keep-alive>
           <component :is="rightComponent"></component>
@@ -66,14 +56,6 @@ export default {
   methods: {
     downloadCanvas() {
       eventbus.$emit('output');
-      /*
-      document.getElementById('printCanvas').toBlob(function(blobData){
-        let downloadLink = document.createElement('a');
-        downloadLink.href = window.URL.createObjectURL(blobData);
-        downloadLink.download = 'card.png';
-        downloadLink.click();
-      });
-      */
     },
     changeComponent(componentName) {
       this.rightComponent = componentName

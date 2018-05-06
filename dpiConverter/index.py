@@ -2,7 +2,7 @@ from PIL import Image
 from functional import seq
 from os import listdir
 from os.path import isfile
-# ./env/Scripts/pyinstaller.exe -F --hidden-import PIL index.py
+
 images = seq(
     listdir('./images')
 ).filter(
