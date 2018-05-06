@@ -5,11 +5,11 @@
 ## Screenshot
 
 image cropper made by [Cropper.js](https://fengyuanchen.github.io/cropperjs/)
-<img src = "https://raw.githubusercontent.com/avengerandy/RouteMap/develop/routemap.png" width="100%"/>
+<img src = "https://raw.githubusercontent.com/avengerandy/sevtCardGenerator/master/function01.png" width="100%"/>
 
 you can set property and preview of card will show on left area
-<img src = "https://raw.githubusercontent.com/avengerandy/RouteMap/develop/routemap.png" width="100%"/>
-<img src = "https://raw.githubusercontent.com/avengerandy/RouteMap/develop/routemap.png" width="100%"/>
+<img src = "https://raw.githubusercontent.com/avengerandy/sevtCardGenerator/master/function02.png" width="100%"/>
+<img src = "https://raw.githubusercontent.com/avengerandy/sevtCardGenerator/master/function03.png" width="100%"/>
 
 ## dpiConverter
 if you don't have Photoshop or other graphics editing program, dpiConverter is a simple python code for change images DPI, so that you can print cards in real world
@@ -29,6 +29,8 @@ if you want build it to exe
   cd dpiConverter
   ./ENV/Scripts/pyinstaller.exe -F --hidden-import PIL index.py
 ```
+
+it will get all images from "images" folder and output at "output" folder, make sure you already have those two folder
 
 ## Build Setup for Sevt
 
