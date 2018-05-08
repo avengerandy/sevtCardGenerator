@@ -1,5 +1,5 @@
 <template>
-  <canvas id="printCanvas"></canvas>
+  <canvas ref="printCanvas"></canvas>
 </template>
 
 <script>
@@ -32,8 +32,11 @@ export default {
   },
   mounted () {
     var printCanvasVue = this
-    this.canvas = $("#printCanvas");
-    this.canvasContext = this.canvas[0].getContext('2d');
+    //this.canvas = $("#printCanvas");
+    this.canvas = this.$refs['printCanvas'];
+    this.canvasContext = this.canvas.getContext('2d');
+    this.canvas.setAttribute('height', config.cardWidthPx * config.cardRatio)
+    this.canvas.setAttribute('width', config.cardWidthPx)
     this.resizeRatio();
     $(window).on("resize", function() {
       printCanvasVue.resizeRatio();
@@ -52,15 +55,7 @@ export default {
     eventbus.$on('printContentFontSize', this.printContentFontSize);
     eventbus.$on('printContentFirstFontSize', this.printContentFirstFontSize);
     eventbus.$on('printTitleFontSize', this.printTitleFontSize);
-    eventbus.$on('output', () => {
-      document.getElementById('printCanvas').toBlob(function(blobData){
-        let downloadLink = document.createElement('a');
-        downloadLink.href = window.URL.createObjectURL(blobData);
-        let title = printCanvasVue.cardData.title ? printCanvasVue.cardData.title : 'card' ;
-        downloadLink.download = title + '.png';
-        downloadLink.click();
-      });
-    });
+    eventbus.$on('output', this.output);
   },
   watch: {
     cardData: {
@@ -71,23 +66,28 @@ export default {
     }
   },
   methods: {
+    output: function() {
+      var printCanvasVue = this
+      this.canvas.toBlob(function(blobData){
+        let downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(blobData);
+        let title = printCanvasVue.cardData.title ? printCanvasVue.cardData.title : 'card' ;
+        downloadLink.download = title + '.png';
+        downloadLink.click();
+      });
+    },
     resizeRatio: function() {
-      this.canvas.height(
-        this.canvas.width() * config.cardRatio
-      );
-      let Ratio = config.cardWidthPx / this.canvas.width();
-      this.canvas.attr('height', this.canvas.height() * Ratio)
-      this.canvas.attr('width', this.canvas.width() * Ratio)
+      this.canvas.style.height = this.canvas.clientWidth * config.cardRatio + 'px';  
     },
     print: function() {
-      this.canvasContext.drawImage(imageData.back, 0, 0, this.canvas.attr('width'), this.canvas.attr('height'));
-      this.canvasContext.drawImage(this.cardData.croppedCanvas, 0, 0, this.canvas.attr('width'), this.canvas.attr('height'));
+      this.canvasContext.drawImage(imageData.back, 0, 0, this.canvas.getAttribute('width'), this.canvas.getAttribute('height'));
+      this.canvasContext.drawImage(this.cardData.croppedCanvas, 0, 0, this.canvas.getAttribute('width'), this.canvas.getAttribute('height'));
       if (this.cardData.cardType == '1') {
         this.canvasContext.drawImage(
           imageData.monster, 
           0, 0, 
-          this.canvas.attr('width'), 
-          this.canvas.attr('height')
+          this.canvas.getAttribute('width'), 
+          this.canvas.getAttribute('height')
         );
         let leftTopIconImage
         switch (this.cardData.leftTopIcon) {
@@ -110,8 +110,8 @@ export default {
         this.canvasContext.drawImage(
           leftTopIconImage, 
           0, 0, 
-          this.canvas.attr('width'), 
-          this.canvas.attr('height')
+          this.canvas.getAttribute('width'), 
+          this.canvas.getAttribute('height')
         );
         let attributeImage
         switch (this.cardData.attribute) {
@@ -134,8 +134,8 @@ export default {
         this.canvasContext.drawImage(
           attributeImage, 
           0, 0, 
-          this.canvas.attr('width'), 
-          this.canvas.attr('height')
+          this.canvas.getAttribute('width'), 
+          this.canvas.getAttribute('height')
         );
         let numImage
         switch (this.cardData.num) {
@@ -161,8 +161,8 @@ export default {
         this.canvasContext.drawImage(
           numImage, 
           0, 0, 
-          this.canvas.attr('width'), 
-          this.canvas.attr('height')
+          this.canvas.getAttribute('width'), 
+          this.canvas.getAttribute('height')
         );
         let fontPx = config.cardWidthPx * 0.025;
         this.canvasContext.fillStyle = "rgba(255, 255, 255, 1)";
@@ -196,8 +196,8 @@ export default {
         this.canvasContext.drawImage(
           otherLeftTopIcon, 
           0, 0, 
-          this.canvas.attr('width'), 
-          this.canvas.attr('height')
+          this.canvas.getAttribute('width'), 
+          this.canvas.getAttribute('height')
         );
 
         let contentList = this.cardData.content.split("\n");
