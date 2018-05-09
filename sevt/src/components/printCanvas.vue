@@ -31,17 +31,15 @@ export default {
     }
   },
   mounted () {
-    var printCanvasVue = this
-    //this.canvas = $("#printCanvas");
     this.canvas = this.$refs['printCanvas'];
     this.canvasContext = this.canvas.getContext('2d');
-    this.canvas.setAttribute('height', config.cardWidthPx * config.cardRatio)
-    this.canvas.setAttribute('width', config.cardWidthPx)
+    this.canvas.setAttribute('height', config.cardWidthPx * config.cardRatio);
+    this.canvas.setAttribute('width', config.cardWidthPx);
     this.resizeRatio();
     $(window).on("resize", function() {
-      printCanvasVue.resizeRatio();
-      printCanvasVue.print();
-    });
+      this.resizeRatio();
+      this.print();
+    }.bind(this));
     eventbus.$on('printBackground', this.printBackground);
     eventbus.$on('printTitle', this.printTitle);
     eventbus.$on('printAct', this.printAct);
@@ -67,14 +65,13 @@ export default {
   },
   methods: {
     output: function() {
-      var printCanvasVue = this
-      this.canvas.toBlob(function(blobData){
+      this.canvas.toBlob(function(blobData) {
         let downloadLink = document.createElement('a');
         downloadLink.href = window.URL.createObjectURL(blobData);
-        let title = printCanvasVue.cardData.title ? printCanvasVue.cardData.title : 'card' ;
+        let title = this.cardData.title ? this.cardData.title : 'card' ;
         downloadLink.download = title + '.png';
         downloadLink.click();
-      });
+      }.bind(this));
     },
     resizeRatio: function() {
       this.canvas.style.height = this.canvas.clientWidth * config.cardRatio + 'px';  

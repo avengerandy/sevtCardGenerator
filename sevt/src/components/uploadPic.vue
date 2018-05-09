@@ -1,18 +1,20 @@
 <template>
-  <div id="imageContenter">
+  <div>
     <input type="checkbox" v-model="autoCrop" id="autoCropCheckbox"/>
     <label for="autoCropCheckbox">即時裁切</label>
-    <input type="file" id="change" accept="image" @change="change">
-    <label for="change" class="btn btn-primary">上傳</label>
+    <label class="btn btn-primary">
+      <input type="file" accept="image" @change="change">
+      上傳
+    </label>
     <label class="btn btn-primary" @click="crop">切割</label>
     <br>
-    <img v-show="url" id="image" :src="url" alt="Picture">
+    <img v-show="url" ref="mainImage" :src="url" alt="Picture">
   </div>
 </template>
 
 <script>
-import '../../node_modules/cropperjs/dist/cropper.min.css'
-import Cropper from 'cropperjs'  
+import '../../node_modules/cropperjs/dist/cropper.min.css';
+import Cropper from 'cropperjs';
 import eventbus from '../js/eventbus.js';
 
 export default {
@@ -25,9 +27,7 @@ export default {
     }
   },
   mounted () {
-    var uploadPicVue = this;
-    var image = document.getElementById('image');
-    this.cropper = new Cropper(image, {
+    this.cropper = new Cropper(this.$refs['mainImage'], {
       aspectRatio: 62/90,
       viewMode: 1,
       background:false,
@@ -35,11 +35,11 @@ export default {
       responsive:false,
       autoCropArea:1,
       ready: function () {
-        uploadPicVue.croppable = true;
-      },
+        this.croppable = true;
+      }.bind(this),
       crop: function () {
-        if(uploadPicVue.autoCrop) uploadPicVue.crop();
-      },
+        if(this.autoCrop) this.crop();
+      }.bind(this),
     });
   },
   methods: {
@@ -50,12 +50,10 @@ export default {
       this.cropper.replace(this.url);
     },
     crop () {
-      var croppedCanvas;
       if (!this.croppable) {
         return;
       }
-      croppedCanvas = this.cropper.getCroppedCanvas();
-      eventbus.$emit('printBackground', croppedCanvas);
+      eventbus.$emit('printBackground', this.cropper.getCroppedCanvas());
     }
   }
 }
@@ -67,10 +65,10 @@ export default {
     outline: none;
     box-shadow: none;
   }
-  #change {
+  input[type="file"] {
     display:none;
   }
-  #image {
+  img {
     width: 100%;
     max-width: 100%;
   }
