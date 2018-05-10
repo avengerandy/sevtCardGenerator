@@ -32,7 +32,6 @@ import printCanvas from './components/printCanvas'
 import uploadPic from './components/uploadPic'
 import monsterCard from './components/monsterCard'
 import eventbus from './js/eventbus.js';
-import 'bootstrap'
 
 export default {
   data() {

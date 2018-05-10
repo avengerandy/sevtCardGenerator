@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import eventbus from '../js/eventbus.js';
 import config from '../js/config.js';
 import imageData from '../js/image.js';
@@ -36,7 +35,7 @@ export default {
     this.canvas.setAttribute('height', config.cardWidthPx * config.cardRatio);
     this.canvas.setAttribute('width', config.cardWidthPx);
     this.resizeRatio();
-    $(window).on("resize", function() {
+    window.addEventListener('resize', function() {
       this.resizeRatio();
       this.print();
     }.bind(this));
@@ -227,7 +226,6 @@ export default {
         }
       }
       this.canvasContext.fillStyle = "rgba(229, 205, 197, 1)";
-      //let fontPx = config.cardWidthPx * 0.05;
       this.canvasContext.font = this.cardData.titleFontSize + "px Arial, cwTeXFangSong";
       this.canvasContext.fillText(
         this.cardData.title, 
