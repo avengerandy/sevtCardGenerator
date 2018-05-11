@@ -5,7 +5,7 @@
         <printCanvas/>
       </div>
       <div class="col-8 mainCol">
-        <ul class="nav nav-tabs" id="commontTab" role="tablist">
+        <ul class="nav nav-tabs commontTab" role="tablist">
           <li class="nav-item" @click="changeComponent('uploadPic')">
             <a class="nav-link" :class="{active: uploadPicIsActive}">角色圖</a>
           </li>
@@ -78,7 +78,7 @@ export default {
     height: $fullHeight;
   }
 
-  #commontTab {
+  .commontTab {
     position:sticky; 
     top: 0px;
     z-index: 9;
