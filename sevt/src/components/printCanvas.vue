@@ -70,10 +70,7 @@ export default {
     cardData: {
       deep: true,
       handler: function() {
-        let start = new Date().getTime();
         this.print();
-        let end = new Date().getTime();
-        console.log(end - start);
       }
     }
   },
