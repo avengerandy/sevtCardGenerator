@@ -1,5 +1,7 @@
 /dist/
 /build/
 /images/*
+!/images/.gitkeep
 /output/*
+!/output/.gitkeep
 *.spec
