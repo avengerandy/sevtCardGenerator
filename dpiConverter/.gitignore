@@ -1,5 +1,5 @@
 /dist/
 /build/
-/images/
-/output/
+/images/*
+/output/*
 *.spec
