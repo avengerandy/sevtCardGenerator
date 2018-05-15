@@ -81,7 +81,7 @@ export default {
         downloadLink.href = window.URL.createObjectURL(blobData);
         let title = this.cardData.title ? this.cardData.title : 'card' ;
         downloadLink.download = title + '.png';
-        downloadLink.click();
+        downloadLink.dispatchEvent(new MouseEvent('click'));
       }.bind(this));
     },
     resizeRatio: function() {
