@@ -88,6 +88,18 @@ export default {
       this.canvas.style.height = this.canvas.clientWidth * config.cardRatio + 'px';  
     },
     print: function() {
+      this.drawImage();
+      if (this.cardData.cardType == '1') {
+        this.drawActDef();
+        this.drawMonsterleftTopIconImage();
+        this.drawAttributeAndNum();
+      } else {
+        this.drawOtherCard();
+      }
+      this.drawTitle();
+      this.drawOnWindows();
+    },
+    drawImage: function() {
       this.cacheCanvasContext.drawImage(
         imageData.back, 0, 0, 
         this.cardData.width, 
@@ -98,148 +110,104 @@ export default {
         this.cardData.width, 
         this.cardData.height
       );
-      if (this.cardData.cardType == '1') {
-        this.cacheCanvasContext.drawImage(
-          imageData.monster, 0, 0, 
-          this.cardData.width, 
-          this.cardData.height
-        );
-        let leftTopIconImage
-        switch (this.cardData.leftTopIcon) {
-          case '1':
-            leftTopIconImage = imageData.leftTopIconMagicBook;
-            break;
-          case '2':
-            leftTopIconImage = imageData.leftTopIconMap;
-            break;
-          case '3':
-            leftTopIconImage = imageData.leftTopIconSword;
-            break;
-          case '4':
-            leftTopIconImage = imageData.leftTopIconHammer;
-            break;
-          case '5':
-            leftTopIconImage = imageData.leftTopIconInsignia;
-            break;
-        }
-        this.cacheCanvasContext.drawImage(
-          leftTopIconImage, 0, 0, 
-          this.cardData.width, 
-          this.cardData.height
-        );
-        let attributeImage
-        switch (this.cardData.attribute) {
-          case 'fire':
-            attributeImage = imageData.attribute_fire;
-            break;
-          case 'grass':
-            attributeImage = imageData.attribute_grass;
-            break;
-          case 'mine':
-            attributeImage = imageData.attribute_mine;
-            break;
-          case 'water':
-            attributeImage = imageData.attribute_water;
-            break;
-          case 'wind':
-            attributeImage = imageData.attribute_wind;
-            break;
-        }
-        this.cacheCanvasContext.drawImage(
-          attributeImage, 0, 0, 
-          this.cardData.width, 
-          this.cardData.height
-        );
-        let numImage
-        switch (this.cardData.num) {
-          case '1':
-            numImage = imageData.num_one;
-            break;
-          case '2':
-            numImage = imageData.num_two;
-            break;
-          case '3':
-            numImage = imageData.num_three;
-            break;
-          case '4':
-            numImage = imageData.num_four;
-            break;
-          case '5':
-            numImage = imageData.num_five;
-            break;
-          case '6':
-            numImage = imageData.num_six;
-            break;
-        }
-        this.cacheCanvasContext.drawImage(
-          numImage, 0, 0, 
-          this.cardData.width, 
-          this.cardData.height
-        );
-        let fontPx = config.cardWidthPx * 0.025;
-        this.cacheCanvasContext.fillStyle = "rgba(255, 255, 255, 1)";
-        this.cacheCanvasContext.font = "italic " + fontPx + "px Arial, cwTeXFangSong";
-        this.cacheCanvasContext.fillText(
-          this.cardData.act, 
-          config.cardWidthPx * (0.2 - this.cardData.act.toString().length * 0.005), 
-          config.cardWidthPx * 1.202
-        );
-        this.cacheCanvasContext.fillText(
-          this.cardData.def, 
-          config.cardWidthPx * (0.77 - this.cardData.def.toString().length * 0.005), 
-          config.cardWidthPx * 1.265
-        );
-      } else {
-        let otherLeftTopIcon
-        switch (this.cardData.otherLeftTopIcon) {
-          case 'religion':
-            otherLeftTopIcon = imageData.religion;
-            break;
-          case 'equip':
-            otherLeftTopIcon = imageData.equip;
-            break;
-          case 'strategy':
-            otherLeftTopIcon = imageData.strategy;
-            break;
-          case 'environment':
-            otherLeftTopIcon = imageData.environment;
-            break;
-        }
-        this.cacheCanvasContext.drawImage(
-          otherLeftTopIcon, 0, 0, 
-          this.cardData.width, 
-          this.cardData.height
-        );
-
-        let contentList = this.cardData.content.split("\n");
-        let lines = contentList.length;
-        this.cacheCanvasContext.fillStyle = "rgba(77, 57, 0, 1)";
-        this.cacheCanvasContext.font = this.cardData.contentFirstFontSize + "px Arial, cwTeXFangSong";
-        if(this.cardData.otherLeftTopIcon != 'environment') {
-          contentList[0] = '【' + contentList[0] + '】';
-        }
-        this.cacheCanvasContext.fillText(
-          contentList[0], 
-          config.cardWidthPx * 0.07, 
-          config.cardWidthPx * 1.05 + parseInt(this.cardData.contentFirstFontSize)
-        );
-        
-        this.cacheCanvasContext.font = this.cardData.contentFontSize + "px Arial, cwTeXFangSong";
-        let lineHigh = this.cardData.contentFontSize / 2;
-        if(this.cardData.otherLeftTopIcon == 'environment') {
-          lineHigh = 0;
-        }
-        for (let index = 0; index < lines; index++) {
-          if(index === 0){
-            continue;
-          }
-          this.cacheCanvasContext.fillText(
-            contentList[index], 
-            config.cardWidthPx * 0.07, 
-            config.cardWidthPx * 1.05 + parseInt(this.cardData.contentFirstFontSize) + this.cardData.contentFontSize * index + lineHigh
-          );
-        }
+    },
+    drawActDef: function() {
+      this.cacheCanvasContext.drawImage(
+        imageData.monster, 0, 0, 
+        this.cardData.width, 
+        this.cardData.height
+      );
+      let fontPx = config.cardWidthPx * 0.025;
+      this.cacheCanvasContext.fillStyle = "rgba(255, 255, 255, 1)";
+      this.cacheCanvasContext.font = "italic " + fontPx + "px Arial, cwTeXFangSong";
+      this.cacheCanvasContext.fillText(
+        this.cardData.act, 
+        config.cardWidthPx * (0.2 - this.cardData.act.toString().length * 0.005), 
+        config.cardWidthPx * 1.202
+      );
+      this.cacheCanvasContext.fillText(
+        this.cardData.def, 
+        config.cardWidthPx * (0.77 - this.cardData.def.toString().length * 0.005), 
+        config.cardWidthPx * 1.265
+      );
+    },
+    drawMonsterleftTopIconImage: function() {
+      let leftTopIconImage
+      switch (this.cardData.leftTopIcon) {
+        case '1':
+          leftTopIconImage = imageData.leftTopIconMagicBook;
+          break;
+        case '2':
+          leftTopIconImage = imageData.leftTopIconMap;
+          break;
+        case '3':
+          leftTopIconImage = imageData.leftTopIconSword;
+          break;
+        case '4':
+          leftTopIconImage = imageData.leftTopIconHammer;
+          break;
+        case '5':
+          leftTopIconImage = imageData.leftTopIconInsignia;
+          break;
       }
+      this.cacheCanvasContext.drawImage(
+        leftTopIconImage, 0, 0, 
+        this.cardData.width, 
+        this.cardData.height
+      );
+    },
+    drawAttributeAndNum: function() {
+      let attributeImage
+      switch (this.cardData.attribute) {
+        case 'fire':
+          attributeImage = imageData.attribute_fire;
+          break;
+        case 'grass':
+          attributeImage = imageData.attribute_grass;
+          break;
+        case 'mine':
+          attributeImage = imageData.attribute_mine;
+          break;
+        case 'water':
+          attributeImage = imageData.attribute_water;
+          break;
+        case 'wind':
+          attributeImage = imageData.attribute_wind;
+          break;
+      }
+      this.cacheCanvasContext.drawImage(
+        attributeImage, 0, 0, 
+        this.cardData.width, 
+        this.cardData.height
+      );
+      let numImage
+      switch (this.cardData.num) {
+        case '1':
+          numImage = imageData.num_one;
+          break;
+        case '2':
+          numImage = imageData.num_two;
+          break;
+        case '3':
+          numImage = imageData.num_three;
+          break;
+        case '4':
+          numImage = imageData.num_four;
+          break;
+        case '5':
+          numImage = imageData.num_five;
+          break;
+        case '6':
+          numImage = imageData.num_six;
+          break;
+      }
+      this.cacheCanvasContext.drawImage(
+        numImage, 0, 0, 
+        this.cardData.width, 
+        this.cardData.height
+      );
+    },
+    drawTitle: function() {
       this.cacheCanvasContext.fillStyle = "rgba(229, 205, 197, 1)";
       this.cacheCanvasContext.font = this.cardData.titleFontSize + "px Arial, cwTeXFangSong";
       this.cacheCanvasContext.fillText(
@@ -247,6 +215,59 @@ export default {
         config.cardWidthPx * 0.6, 
         config.cardWidthPx * 0.172 - (90 - parseInt(this.cardData.titleFontSize))/2.5
       );
+    },
+    drawOtherCard: function() {
+      let otherLeftTopIcon
+      switch (this.cardData.otherLeftTopIcon) {
+        case 'religion':
+          otherLeftTopIcon = imageData.religion;
+          break;
+        case 'equip':
+          otherLeftTopIcon = imageData.equip;
+          break;
+        case 'strategy':
+          otherLeftTopIcon = imageData.strategy;
+          break;
+        case 'environment':
+          otherLeftTopIcon = imageData.environment;
+          break;
+      }
+      this.cacheCanvasContext.drawImage(
+        otherLeftTopIcon, 0, 0, 
+        this.cardData.width, 
+        this.cardData.height
+      );
+
+      let contentList = this.cardData.content.split("\n");
+      let lines = contentList.length;
+      this.cacheCanvasContext.fillStyle = "rgba(77, 57, 0, 1)";
+      this.cacheCanvasContext.font = this.cardData.contentFirstFontSize + "px Arial, cwTeXFangSong";
+      if(this.cardData.otherLeftTopIcon != 'environment') {
+        contentList[0] = '【' + contentList[0] + '】';
+      }
+      this.cacheCanvasContext.fillText(
+        contentList[0], 
+        config.cardWidthPx * 0.07, 
+        config.cardWidthPx * 1.05 + parseInt(this.cardData.contentFirstFontSize)
+      );
+      
+      this.cacheCanvasContext.font = this.cardData.contentFontSize + "px Arial, cwTeXFangSong";
+      let lineHigh = this.cardData.contentFontSize / 2;
+      if(this.cardData.otherLeftTopIcon == 'environment') {
+        lineHigh = 0;
+      }
+      for (let index = 0; index < lines; index++) {
+        if(index === 0){
+          continue;
+        }
+        this.cacheCanvasContext.fillText(
+          contentList[index], 
+          config.cardWidthPx * 0.07, 
+          config.cardWidthPx * 1.05 + parseInt(this.cardData.contentFirstFontSize) + this.cardData.contentFontSize * index + lineHigh
+        );
+      }
+    },
+    drawOnWindows: function() {
       this.canvasContext.drawImage(
         this.cacheCanvas, 0, 0, 
         this.cardData.width, 
