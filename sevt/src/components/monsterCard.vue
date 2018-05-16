@@ -110,6 +110,7 @@
         </div>
       </div>
     </div>
+    <label class="btn btn-primary" @click="printAll">重繪</label>
   </form>
 </div>
 </template>
@@ -175,6 +176,11 @@ export default {
   computed: {
     isMonster: function () {
       return this.cardType == '1'
+    }
+  },
+  methods: {
+    printAll:function () {
+      eventbus.$emit('printAll');
     }
   }
 }
